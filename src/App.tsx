@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import Search from './search/Search';
+import List from './list/List';
 import { Person } from "./models/Person";
 
 interface Props {
@@ -29,6 +30,7 @@ class App extends React.Component<Props, State> {
     return (
       <div className='app'>
         <Search onSearchResult={this.handleSearchResults}></Search>
+        <List result={result}></List>
       </div>
     )
   }
