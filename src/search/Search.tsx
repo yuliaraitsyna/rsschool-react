@@ -3,6 +3,7 @@ import { Person } from "../models/Person";
 
 interface Props {
     onSearchResult: (result: Person[]) => void;
+    setLoading: (loading: boolean) => void;
 }
 
 interface State {
@@ -19,51 +20,58 @@ class Search extends React.Component<Props, State> {
 
     componentDidMount() {
         const query = localStorage.getItem('searchQuery');
-        if(query) {
-            this.setState({ query: query});
+        if (query) {
+            this.setState({ query: query });
         }
     }
 
     handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const query = event.target.value;
         this.setState({
-            query: query
+            query: event.target.value
         });
-        localStorage.setItem('searchQuery', query);
+        localStorage.setItem('searchQuery', event.target.value);
     };
 
     handleSearch = (event: FormEvent) => {
         event.preventDefault();
-        const {query} = this.state;
+        const { query } = this.state;
+
+        this.props.setLoading(true);
 
         fetch(`https://swapi.dev/api/people/?search=${query}`)
             .then(response => {
-                if(!response.ok) {
+                if (!response.ok) {
                     throw new Error("Nothing was found");
                 }
                 return response.json();
             })
             .then(data => {
                 this.props.onSearchResult(data.results);
+                this.props.setLoading(false);
             })
             .catch(error => {
-                throw new Error(error.message);
+                console.error("Error during search: ", error);
+                this.props.setLoading(false);
             });
     };
 
     render() {
         const { query } = this.state;
-        
+
         return (
             <div className="search-bar">
                 <form onSubmit={this.handleSearch}>
-                <input type="text" value={query} placeholder="Enter your query" onChange={this.handleInputChange}></input>
-                <button type="submit">Search</button>
+                    <input
+                        type="text"
+                        value={query}
+                        placeholder="Enter your query"
+                        onChange={this.handleInputChange}
+                    />
+                    <button type="submit">Search</button>
                 </form>
             </div>
-        )
+        );
     }
-
 }
 
 export default Search;
