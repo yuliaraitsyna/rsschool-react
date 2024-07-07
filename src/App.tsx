@@ -34,7 +34,9 @@ class App extends React.Component<Props, State> {
         return response.json();
       })
       .then(data => {
-        this.setState({ result: data.results, loading: false });
+        setTimeout(() => {
+          this.setState({ result: data.results, loading: false });
+        }, 1000)
       })
       .catch(error => {
         console.error("Error fetching data: ", error);

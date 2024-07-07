@@ -47,8 +47,10 @@ class Search extends React.Component<Props, State> {
                 return response.json();
             })
             .then(data => {
-                this.props.onSearchResult(data.results);
-                this.props.setLoading(false);
+                setTimeout(() => {
+                    this.props.onSearchResult(data.results);
+                    this.props.setLoading(false);
+                }, 1000)
             })
             .catch(error => {
                 console.error("Error during search: ", error);
