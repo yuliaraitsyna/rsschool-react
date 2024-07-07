@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import { Person } from "../models/Person";
+import "./Search.css"
 
 interface Props {
     onSearchResult: (result: Person[]) => void;
