@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Search from './search/Search';
-import List from './list/List';
+import Search from './components/search/Search';
+import List from './components/list/List';
 import { Person } from "./models/Person";
 
 interface Props {}

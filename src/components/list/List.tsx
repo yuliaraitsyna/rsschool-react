@@ -1,5 +1,5 @@
 import React from "react";
-import { Person } from "../models/Person";
+import { Person } from "../../models/Person";
 import "./List.css"
 
 interface Props {
