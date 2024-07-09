@@ -57,9 +57,11 @@ class App extends React.Component<Props, State> {
     const { result, loading } = this.state;
     return (
       <div className='app'>
-        <ErrorButton></ErrorButton>
-        <h1>Star Wars search</h1>
-        <Search onSearchResult={this.handleSearchResults} setLoading={this.handleLoadingState}></Search>
+        <div className='upper-component'>
+          <ErrorButton></ErrorButton>
+          <h1>Star Wars search</h1>
+          <Search onSearchResult={this.handleSearchResults} setLoading={this.handleLoadingState}></Search>
+        </div>
         {loading ? <div>Loading...</div> : <List result={result}></List>}
       </div>
     );
