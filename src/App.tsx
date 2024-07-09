@@ -3,6 +3,7 @@ import './App.css';
 import Search from './components/search/Search';
 import List from './components/list/List';
 import { Person } from "./models/Person";
+import ErrorButton from './error_handling/ErrorButton';
 
 interface Props {}
 
@@ -56,6 +57,7 @@ class App extends React.Component<Props, State> {
     const { result, loading } = this.state;
     return (
       <div className='app'>
+        <ErrorButton></ErrorButton>
         <h1>Star Wars search</h1>
         <Search onSearchResult={this.handleSearchResults} setLoading={this.handleLoadingState}></Search>
         {loading ? <div>Loading...</div> : <List result={result}></List>}
