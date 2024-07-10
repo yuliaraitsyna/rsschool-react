@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent } from "react";
+import useLocalStorage from "../../models/useLocalStorage";
 import { Person } from "../../models/Person";
 import "./Search.css"
 
@@ -9,17 +10,10 @@ interface Props {
 
 const Search: React.FC <Props> = ({onSearchResult, setLoading}) => {
 
-    const [query, setQuery] = React.useState<string>(localStorage.getItem('searchQuery') || "");
-
-    React.useEffect(() => {
-        const storedQuery = localStorage.getItem('searchQuery');
-        storedQuery ? setQuery(storedQuery) : setQuery('');
-    }, [])
+    const [query, setQuery] = useLocalStorage('searchQuery', '');
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const updatedQuery = event.target.value;
-        setQuery(updatedQuery);
-        localStorage.setItem('searchQuery', updatedQuery);
+        setQuery(event.target.value);
     }
 
     const handleSearch = (event: FormEvent) => {
