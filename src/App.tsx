@@ -63,7 +63,7 @@ const App: React.FC = () => {
       </div>
       {loading ? <div>Loading...</div> : (
         <>
-          <List result={result} currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+          <List result={result} currentPage = {page} totalPages={totalPages} onPageChange = {handlePageChange}/>
         </>
       )}
     </div>

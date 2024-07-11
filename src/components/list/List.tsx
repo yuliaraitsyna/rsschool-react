@@ -1,27 +1,16 @@
 import React from "react";
 import { Person } from "../../models/Person";
 import "./List.css";
+import Panigation from "../panigation/Panigation";
 
 interface Props {
-  result: Person[];
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (newPage: number) => void;
+    result: Person[];
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (newPage: number) => void;
 }
 
 const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange }) => {
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
-    }
-  };
 
   return (
     result.length > 0 ?
@@ -40,11 +29,7 @@ const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange }
             </li>
           ))}
         </ul>
-        <div className="pagination">
-          <button className="previous" onClick={handlePreviousPage} disabled={currentPage === 1}>{`<`}</button>
-          <span>{currentPage} / {totalPages}</span>
-          <button className="next" onClick={handleNextPage} disabled={currentPage === totalPages}>{`>`}</button>
-        </div>
+        <Panigation currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange}></Panigation>
       </div> :
       <div>No results found.</div>
   );
