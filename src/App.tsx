@@ -18,6 +18,10 @@ const App: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
+    navigate('/', { replace: true });
+  }, [navigate]);
+
+  useEffect(() => {
     const query = new URLSearchParams(location.search);
     const pageParam = query.get('page');
     const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
