@@ -79,8 +79,14 @@ const App: React.FC = () => {
           )}
         </section>
         <section className='right-section'>
-          <h3>Details</h3>
-          {selectedItemId ? <Details id={selectedItemId} /> : <div>Select an item to view details</div>}
+          {
+            selectedItemId ? 
+            <>
+              <h3>Details</h3>
+              <Details id={selectedItemId} />
+            </> : 
+            null
+          }
         </section>
       </main>
     </div>

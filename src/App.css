@@ -17,6 +17,6 @@ main {
     flex-direction: row;
 }
 
-.left-section {
-    width: 40vw;
+.right-section {
+    margin-left: 100px;
 }

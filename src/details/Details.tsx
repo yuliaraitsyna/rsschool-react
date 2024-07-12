@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Person } from '../models/Person';
+import "./Details.css"
 
 interface Props {
   id: number;
@@ -32,8 +33,8 @@ const Details: React.FC<Props> = ({ id }) => {
   if (!person) return <div>No details available</div>;
 
   return (
-    <div>
-      <h2>{person.name}</h2>
+    <div className='details'>
+      <h2 className='person-header'>{person.name}</h2>
       <p>Height: {person.height}</p>
       <p>Mass: {person.mass}</p>
       <p>Hair Color: {person.hair_color}</p>
