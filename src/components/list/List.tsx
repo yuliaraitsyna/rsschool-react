@@ -1,38 +1,42 @@
 import React from "react";
 import { Person } from "../../models/Person";
 import "./List.css";
-import Panigation from "../panigation/Panigation";
+import Pagination from "../pagination/Pagination";
 
 interface Props {
     result: Person[];
     currentPage: number;
     totalPages: number;
     onPageChange: (newPage: number) => void;
+    onItemClick: (id: number) => void;
 }
 
-const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange }) => {
+const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange, onItemClick }) => {
 
-  return (
-    result.length > 0 ?
-      <div className="result-list">
-        <ul>
-          {result.map((person, index) => (
-            <li key={index} className="person">
-              <h2>{person.name}</h2>
-              <p>Height: {person.height}</p>
-              <p>Mass: {person.mass}</p>
-              <p>Hair Color: {person.hair_color}</p>
-              <p>Skin Color: {person.skin_color}</p>
-              <p>Eye Color: {person.eye_color}</p>
-              <p>Birth Year: {person.birth_year}</p>
-              <p>Gender: {person.gender}</p>
-            </li>
-          ))}
-        </ul>
-        <Panigation currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange}></Panigation>
-      </div> :
-      <div>No results found.</div>
-  );
+    const extractIdFromUrl = (url: string): number => {
+        const parts = url.split('/');
+        const id = parts[parts.length - 2];
+        return parseInt(id, 10);
+    };
+
+    const handleItemClick = (id: number) => {
+        onItemClick(id);
+    };
+
+    return (
+        result.length > 0 ?
+            <div className="result-list">
+                <ul>
+                    {result.map((person) => (
+                        <li key={extractIdFromUrl(person.url)} className='person' onClick={() => handleItemClick(extractIdFromUrl(person.url))}>
+                            <h2>{person.name}</h2>
+                        </li>
+                    ))}
+                </ul>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+            </div> :
+            <div>No results found.</div>
+    );
 };
 
 export default List;

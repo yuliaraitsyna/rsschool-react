@@ -10,3 +10,13 @@
 
     background-color: rgb(20, 20, 20);
 }
+
+main {
+    margin:5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.left-section {
+    width: 40vw;
+}
