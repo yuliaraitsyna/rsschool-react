@@ -18,8 +18,12 @@ const App: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    navigate('/', { replace: true });
-  }, [navigate]);
+    const query = new URLSearchParams(location.search);
+    const pageParam = query.get('page');
+    if (!pageParam) {
+      navigate(`/?page=1`, { replace: true });
+    }
+  }, [location.search, navigate]);
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -61,7 +65,7 @@ const App: React.FC = () => {
 
   const handleItemClick = (newItemId: number) => {
     setSelectedItemId(newItemId);
-    navigate(`/?page=${page}/details/${newItemId}`);
+    navigate(`/?page=${page}&details=${newItemId}`);
   };
 
   const handleCloseDeatils = () => {
