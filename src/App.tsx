@@ -64,6 +64,10 @@ const App: React.FC = () => {
     navigate(`/?page=${page}/details/${newItemId}`);
   };
 
+  const handleCloseDeatils = () => {
+    setSelectedItemId(0);
+  };
+
   return (
     <div className='app'>
       <div className='upper-component'>
@@ -83,7 +87,7 @@ const App: React.FC = () => {
             selectedItemId ? 
             <>
               <h3>Details</h3>
-              <Details id={selectedItemId} />
+              <Details id={selectedItemId} onClose={handleCloseDeatils}/>
             </> : 
             null
           }
