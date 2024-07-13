@@ -3,6 +3,7 @@ import { Person } from "../../models/Person";
 import "./List.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
+import extractIdFromUrl from "../../models/extractIdFromUrl";
 
 interface Props {
     result: Person[];
@@ -13,12 +14,13 @@ interface Props {
 }
 
 const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange, onItemClick }) => {
+
     return (
         result.length > 0 ?
             <div className="result-list">
                 <ul>
                     {result.map((person) => (
-                        <Card key={person.url} data={person} onClick={onItemClick}></Card>
+                        <Card key={extractIdFromUrl(person.url)} data={person} onClick={onItemClick}></Card>
                     ))}
                 </ul>
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />

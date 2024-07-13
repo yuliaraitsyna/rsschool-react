@@ -1,6 +1,7 @@
 import React from "react";
 import { Person } from "../../models/Person";
 import "./Card.css"
+import extractIdFromUrl from "../../models/extractIdFromUrl";
 
 interface Props {
     data: Person;
@@ -9,18 +10,12 @@ interface Props {
 
 const Card: React.FC<Props> = ({ data, onClick }) => {
 
-    const extractIdFromUrl = (url: string): number => {
-        const parts = url.split('/');
-        const id = parts[parts.length - 2];
-        return parseInt(id, 10);
-    };
-
     const handleItemClick = (id: number) => {
         onClick(id);
     };
 
     return (
-        <li key={extractIdFromUrl(data.url)} className='person' onClick={() => handleItemClick(extractIdFromUrl(data.url))}>
+        <li className='person' onClick={() => handleItemClick(extractIdFromUrl(data.url))}>
             <h2>{data.name}</h2>
         </li>
     )
