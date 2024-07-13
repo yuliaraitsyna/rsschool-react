@@ -1,0 +1,11 @@
+.person {
+    width:600px;
+    margin:10px;
+    padding: 10px;
+
+    background: white;
+    border:none;
+    border-radius: 5px;
+
+    color: black;
+}

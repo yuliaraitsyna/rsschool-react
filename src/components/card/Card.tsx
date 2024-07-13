@@ -1,5 +1,6 @@
 import React from "react";
 import { Person } from "../../models/Person";
+import "./Card.css"
 
 interface Props {
     data: Person;
