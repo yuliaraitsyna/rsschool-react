@@ -1,0 +1,24 @@
+.person {
+    width:600px;
+    margin:10px;
+    padding: 10px;
+
+    background: white;
+    border:none;
+    border-radius: 5px;
+
+    color: black;
+}
+
+.close-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+  }

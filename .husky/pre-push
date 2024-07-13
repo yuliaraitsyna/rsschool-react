@@ -1,0 +1,4 @@
+echo "Running pre-push hook..."
+npm test
+vitest
+echo "Finished pre-push hook."
