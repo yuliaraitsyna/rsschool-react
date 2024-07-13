@@ -50,8 +50,14 @@
     "vitest": "^2.0.2"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "npx eslint --fix "
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npx lint-staged"
+    }
   }
 }
