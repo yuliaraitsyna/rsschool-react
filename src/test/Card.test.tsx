@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import extractIdFromUrl from "../models/extractIdFromUrl";
 import Card from "../components/card/Card";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { mockPeople } from "../mockPeople";
+import { mockPeople } from "../mocks/mockPeople";
 import { vi } from "vitest";
 
 const mockPerson = mockPeople[0];

@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom"
 import List from "../components/list/List"
 import { render, screen } from "@testing-library/react";
-import { mockPeople } from "../mockPeople";
+import { mockPeople } from "../mocks/mockPeople";
 
 test('Renders specified number of cards', () => {
     render(
@@ -19,7 +19,7 @@ test('An appropriate message is displayed if no cards are present', () => {
         <BrowserRouter>
             <List result={[]} currentPage={0} totalPages={0} onPageChange={() => {}} onItemClick={() => {}}></List>
         </BrowserRouter>
-    )
+    );
 
     expect(screen.getByText("No results found.")).toBeInTheDocument();
 })

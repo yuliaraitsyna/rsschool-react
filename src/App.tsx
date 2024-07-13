@@ -66,6 +66,7 @@ const App: React.FC = () => {
 
   const handleCloseDeatils = () => {
     setSelectedItemId(0);
+    navigate(`/?page=${page}`);
   };
 
   return (
