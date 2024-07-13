@@ -1,1 +1,5 @@
-npm test
+#!/bin/sh
+echo "Running pre-push hook..."
+npm test -- --watchAll=false  # Adjust as per your test runner's configuration
+vitest
+echo "Finished pre-push hook."
