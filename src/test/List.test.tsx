@@ -2,11 +2,15 @@ import { BrowserRouter } from "react-router-dom"
 import List from "../components/list/List"
 import { render, screen } from "@testing-library/react";
 import { mockPeople } from "../mocks/mockPeople";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 test('Renders specified number of cards', () => {
     render(
         <BrowserRouter>
-            <List result={mockPeople} currentPage={1} totalPages={9} onPageChange={() => {}} onItemClick={() => {}}></List>
+            <Provider store={store}>
+                <List result={mockPeople} currentPage={1} totalPages={9} onPageChange={() => {}} onItemClick={() => {}}></List>
+            </Provider>
         </BrowserRouter>
     );
 
@@ -17,7 +21,9 @@ test('Renders specified number of cards', () => {
 test('An appropriate message is displayed if no cards are present', () => {
     render(
         <BrowserRouter>
-            <List result={[]} currentPage={0} totalPages={0} onPageChange={() => {}} onItemClick={() => {}}></List>
+            <Provider store={store}>
+                <List result={[]} currentPage={0} totalPages={0} onPageChange={() => {}} onItemClick={() => {}}></List>
+            </Provider>
         </BrowserRouter>
     );
 

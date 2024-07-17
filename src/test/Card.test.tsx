@@ -4,13 +4,17 @@ import Card from "../components/card/Card";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mockPeople } from "../mocks/mockPeople";
 import { vi } from "vitest";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 const mockPerson = mockPeople[0];
 
 test("Card component renders the relevant card data", () => {
     render(
         <BrowserRouter>
-            <Card key={extractIdFromUrl(mockPerson.url)} data={mockPerson} onClick={() => {}} />
+            <Provider store={store}>
+                <Card key={extractIdFromUrl(mockPerson.url)} data={mockPerson} onClick={() => {}} />
+            </Provider>
         </BrowserRouter>
     );
 
@@ -24,7 +28,9 @@ test("Clicking on a card opens a detailed card component", async () => {
     render(
         <BrowserRouter>
             {mockPeople.map(person => (
-                <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} />
+                <Provider store={store}>
+                    <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} />
+                </Provider>
             ))}
         </BrowserRouter>
     );
@@ -42,7 +48,9 @@ test("Clicking triggers an additional API call to fetch detailed information", a
     render(
         <BrowserRouter>
             {mockPeople.map((person) => (
-                <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} />
+                <Provider store={store}>
+                    <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} />
+                </Provider>
             ))}
         </BrowserRouter>
     );
