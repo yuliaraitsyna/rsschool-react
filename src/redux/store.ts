@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cardsReducer from "./CardsSlice"
+import cardsSlice from './cardsSlice';
 
 const store = configureStore({
   reducer: {
-    cards: cardsReducer,
+    cards: cardsSlice.reducer,
   },
 });
 

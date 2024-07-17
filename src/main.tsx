@@ -5,11 +5,13 @@ import ErrorBoundary from './error_handling/ErrorBoundary.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ErrorPage from './error_handling/ErrorPage.tsx'
+import { Provider } from 'react-redux'
+import store from './redux/store.ts'
 
 const router = createBrowserRouter([
   {
     path: "/rsschool-react/",
-    element: <ErrorBoundary><App/></ErrorBoundary>,
+    element: <ErrorBoundary><Provider store={store}><App/></Provider></ErrorBoundary>,
     errorElement: <ErrorPage></ErrorPage>
   },
 ]);
