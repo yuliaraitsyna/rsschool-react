@@ -17,39 +17,46 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const pageParam = query.get('page');
-    if (!pageParam) {
-      navigate(`/rsschool-react//?page=1`, { replace: true });
-    }
-  }, [location.search, navigate]);
+  const query = new URLSearchParams(location.search);
+  const pageParam = query.get('page');
+  const detailsParam = query.get('details');
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const pageParam = query.get('page');
+    if (!pageParam) {
+      navigate(`/rsschool-react/?page=1`, { replace: true });
+    }
+  }, [pageParam, navigate]);
+
+  useEffect(() => {
     const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
     setPage(currentPage);
 
     setLoading(true);
     fetch(`https://swapi.dev/api/people/?page=${currentPage}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch data");
-          }
-          return response.json();
-        })
-        .then(data => {
-          setResult(data.results);
-          setTotalPages(Math.ceil(data.count / 10));
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error("Error fetching data: ", error);
-          setLoading(false);
-        });
-        
-  }, [location.search]);
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setResult(data.results);
+        setTotalPages(Math.ceil(data.count / 10));
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching data: ", error);
+        setLoading(false);
+      });
+  }, [pageParam]);
+
+  useEffect(() => {
+    if (detailsParam) {
+      setSelectedItemId(parseInt(detailsParam, 10));
+    } else {
+      setSelectedItemId(0);
+    }
+  }, [detailsParam]);
 
   const handleSearchResults = (result: Person[]) => {
     setResult(result);
@@ -64,12 +71,10 @@ const App: React.FC = () => {
   };
 
   const handleItemClick = (newItemId: number) => {
-    setSelectedItemId(newItemId);
     navigate(`/rsschool-react/?page=${page}&details=${newItemId}`);
   };
 
-  const handleCloseDeatils = () => {
-    setSelectedItemId(0);
+  const handleCloseDetails = () => {
     navigate(`/rsschool-react/?page=${page}`);
   };
 
@@ -92,7 +97,7 @@ const App: React.FC = () => {
             selectedItemId ? 
             <>
               <h3>Details</h3>
-              <Details id={selectedItemId} onClose={handleCloseDeatils}/>
+              <Details id={selectedItemId} onClose={handleCloseDetails}/>
             </> : 
             null
           }
