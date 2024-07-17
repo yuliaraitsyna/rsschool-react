@@ -35,7 +35,7 @@ const Card: React.FC<Props> = ({ data, onClick }) => {
 
     return (
         <li className='person' onClick={() => handleItemClick(extractIdFromUrl(data.url))}>
-            <input type="checkbox" onChange={handleSelection} onClick={(event: React.MouseEvent<HTMLInputElement>) => event.stopPropagation()}></input>
+            <input className='checkbox' type="checkbox" onChange={handleSelection} onClick={(event: React.MouseEvent<HTMLInputElement>) => event.stopPropagation()}></input>
             <h2>{data.name}</h2>
         </li>
     )
