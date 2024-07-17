@@ -8,7 +8,7 @@ import ErrorPage from './error_handling/ErrorPage.tsx'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/rsschool-react/",
     element: <ErrorBoundary><App/></ErrorBoundary>,
     errorElement: <ErrorPage></ErrorPage>
   },

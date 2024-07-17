@@ -21,7 +21,7 @@ const App: React.FC = () => {
     const query = new URLSearchParams(location.search);
     const pageParam = query.get('page');
     if (!pageParam) {
-      navigate(`/?page=1`, { replace: true });
+      navigate(`/rsschool-react//?page=1`, { replace: true });
     }
   }, [location.search, navigate]);
 
@@ -60,17 +60,17 @@ const App: React.FC = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    navigate(`/?page=${newPage}`);
+    navigate(`/rsschool-react/?page=${newPage}`);
   };
 
   const handleItemClick = (newItemId: number) => {
     setSelectedItemId(newItemId);
-    navigate(`/?page=${page}&details=${newItemId}`);
+    navigate(`/rsschool-react/?page=${page}&details=${newItemId}`);
   };
 
   const handleCloseDeatils = () => {
     setSelectedItemId(0);
-    navigate(`/?page=${page}`);
+    navigate(`/rsschool-react/?page=${page}`);
   };
 
   return (
