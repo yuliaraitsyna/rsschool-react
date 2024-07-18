@@ -1,9 +1,9 @@
 .person-header {
-    color: red;
+    color: var(--accent-color);
 }
 
 .close-button {
-    background-color: #f44336;
+    background-color: var(--accent-color);
     color: white;
     border: none;
     padding: 8px 16px;

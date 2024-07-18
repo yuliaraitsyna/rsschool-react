@@ -19,6 +19,6 @@
     height: 34px;
 
     border:none;
-    background-color: red;
+    background-color: var(--accent-color);
     border-radius: 0 5px 5px 0;
 }

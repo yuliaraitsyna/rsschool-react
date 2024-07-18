@@ -1,6 +1,32 @@
-.app {
-    width: 100vw;
+:root {
+    --background-color: #ffffff;
+    --upper-bg-color: rgb(20, 20, 20);
+    --accent-color: rgb(255, 0, 0);
+    --hover-color: rgba(255, 0, 0, 0.22);
+    --text-color: #000000;
 }
+
+.dark {
+    --background-color: #333333;
+    --upper-bg-color: rgb(20, 20, 20);
+    --accent-color: rgb(255, 0, 0);
+    --hover-color: rgba(255, 0, 0, 0.22);
+    --text-color: #ffffff;
+}
+  
+.light {
+    --background-color: #e4e4e4;
+    --upper-bg-color: rgb(255, 255, 255);
+    --accent-color: rgb(0, 0, 255);
+    --hover-color: rgba(0, 0, 255, 0.22);
+    --text-color: #000000;
+}
+  
+.app {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
 .upper-component {
     padding: 2%;
     margin-bottom: 20px;
@@ -8,7 +34,7 @@
     position:sticky;
     top: 0;
 
-    background-color: rgb(20, 20, 20);
+    background-color: var(--upper-bg-color)
 }
 
 main {

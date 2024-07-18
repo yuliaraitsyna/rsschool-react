@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './App.css';
 import Search from './components/search/Search';
 import List from './components/list/List';
@@ -6,6 +6,8 @@ import { Person } from "./models/Person";
 import ErrorButton from './error_handling/ErrorButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Details from './details/Details';
+import ThemeToggleButton from './components/theme/ThemeToggleButton';
+import ThemeContext from './components/theme/ThemeContext';
 
 const App: React.FC = () => {
   const [result, setResult] = React.useState<Person[]>([]);
@@ -13,6 +15,7 @@ const App: React.FC = () => {
   const [page, setPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(1);
   const [selectedItemId, setSelectedItemId] = React.useState(0);
+  const themeContext = useContext(ThemeContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,10 +81,17 @@ const App: React.FC = () => {
     navigate(`/rsschool-react/?page=${page}`);
   };
 
+  if (!themeContext) {
+    return null;
+  }
+
+  const { theme } = themeContext;
+
   return (
-    <div className='app'>
+    <div className={`app ${theme}`}>
       <div className='upper-component'>
         <ErrorButton />
+        <ThemeToggleButton />
         <h1>Star Wars search</h1>
         <Search onSearchResult={handleSearchResults} setLoading={handleLoadingState} />
       </div>
