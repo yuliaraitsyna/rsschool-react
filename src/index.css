@@ -11,6 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  background-color: var(--background-color);
+}
+
 body {
   margin: 0;
   padding: 0;

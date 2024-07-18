@@ -16,9 +16,8 @@ interface Props {
 }
 
 const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange, onItemClick }) => {
-
     const selectedCards = useSelector((state: RootState) => state.cards.selectedCards);
-    console.log(selectedCards);
+    console.log("Selected:", selectedCards);
     
     return (
         result.length > 0 ?

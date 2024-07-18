@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Details from './details/Details';
 import ThemeToggleButton from './components/theme/ThemeToggleButton';
 import ThemeContext from './components/theme/ThemeContext';
+import Flyout from './components/flyout/Flyout';
 
 const App: React.FC = () => {
   const [result, setResult] = React.useState<Person[]>([]);
@@ -112,6 +113,7 @@ const App: React.FC = () => {
             null
           }
         </section>
+        <Flyout></Flyout>
       </main>
     </div>
   );  

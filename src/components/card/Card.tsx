@@ -4,7 +4,7 @@ import "./Card.css"
 import extractIdFromUrl from "../../models/extractIdFromUrl";
 import { selectCard, unselectCard } from "../../redux/cardsSlice"
 import { useDispatch } from "react-redux";
-import React, { useState } from "react";
+import React from "react";
 import store from "../../redux/store";
 
 interface Props {
@@ -14,7 +14,6 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ data, onClick, isSelected }) => {
-    const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
 
     const handleItemClick =  (id: number) => {
@@ -22,9 +21,7 @@ const Card: React.FC<Props> = ({ data, onClick, isSelected }) => {
     };
 
     const handleSelection = () => {
-        setChecked(!checked);
-
-        if(!checked) {
+        if(!isSelected) {
             dispatch(selectCard(data));
         }
         else {
