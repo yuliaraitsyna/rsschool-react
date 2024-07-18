@@ -13,7 +13,7 @@ test("Card component renders the relevant card data", () => {
     render(
         <BrowserRouter>
             <Provider store={store}>
-                <Card key={extractIdFromUrl(mockPerson.url)} data={mockPerson} onClick={() => {}} />
+                <Card key={extractIdFromUrl(mockPerson.url)} data={mockPerson} onClick={() => {}} isSelected={false} />
             </Provider>
         </BrowserRouter>
     );
@@ -29,7 +29,7 @@ test("Clicking on a card opens a detailed card component", async () => {
         <BrowserRouter>
             {mockPeople.map(person => (
                 <Provider store={store}>
-                    <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} />
+                    <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} isSelected={false}/>
                 </Provider>
             ))}
         </BrowserRouter>
@@ -49,7 +49,7 @@ test("Clicking triggers an additional API call to fetch detailed information", a
         <BrowserRouter>
             {mockPeople.map((person) => (
                 <Provider store={store}>
-                    <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} />
+                    <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} isSelected={false}/>
                 </Provider>
             ))}
         </BrowserRouter>

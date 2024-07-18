@@ -4,6 +4,8 @@ import "./List.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
 import extractIdFromUrl from "../../models/extractIdFromUrl";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface Props {
     result: Person[];
@@ -15,13 +17,19 @@ interface Props {
 
 const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange, onItemClick }) => {
 
+    const selectedCards = useSelector((state: RootState) => state.cards.selectedCards);
+    console.log(selectedCards);
+    
     return (
         result.length > 0 ?
             <div className="result-list">
                 <ul>
-                    {result.map((person) => (
-                        <Card key={extractIdFromUrl(person.url)} data={person} onClick={onItemClick}></Card>
-                    ))}
+                    {result.map((person) => {
+                        const selected = selectedCards.some(card => extractIdFromUrl(card.url) === extractIdFromUrl(person.url));
+                        return (
+                            <Card key={extractIdFromUrl(person.url)} data={person} onClick={onItemClick} isSelected={selected}></Card>
+                        )
+                    })}
                 </ul>
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
             </div> :
