@@ -3,10 +3,12 @@ import { Person } from "../models/Person";
 import extractIdFromUrl from "../models/extractIdFromUrl";
 
 export interface CardsState {
+    displayedCards: Person[],
     selectedCards: Person[],
 }
 
 const initialState: CardsState = {
+    displayedCards: [],
     selectedCards: [],
 }
 
@@ -17,6 +19,9 @@ export const cardsSlice = createSlice({
         selectCard: (state, action: PayloadAction<Person>) => {
             state.selectedCards.push(action.payload);
         },
+        setCards: (state, action: PayloadAction<Person[]>) => {
+            state.displayedCards = action.payload;
+        },
         unselectCard: (state, action: PayloadAction<number>) => {
             state.selectedCards = state.selectedCards.filter(card => extractIdFromUrl(card.url) !== action.payload);
         },
@@ -26,5 +31,5 @@ export const cardsSlice = createSlice({
     },
 });
 
-export const { selectCard, unselectCard, unselectAll } = cardsSlice.actions;
+export const { selectCard, setCards, unselectCard, unselectAll } = cardsSlice.actions;
 export default cardsSlice;

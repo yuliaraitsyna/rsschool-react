@@ -1,18 +1,14 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import useLocalStorage from "../../models/useLocalStorage";
-import { Person } from "../../models/Person";
 import "./Search.css"
 import { useGetDataByNameQuery } from "../../redux/starWarsAPI";
+import { useDispatch } from "react-redux";
+import { setCards } from "../../redux/cardsSlice";
 
-interface Props {
-    onSearchResult: (result: Person[]) => void;
-    setLoading: (loading: boolean) => void;
-}
-
-const Search: React.FC <Props> = ({onSearchResult, setLoading}) => {
-
+const Search: React.FC = () => {
+    const dispatch = useDispatch();
     const [query, setQuery] = useLocalStorage('searchQuery', '');
-    const { data, error, isLoading } = useGetDataByNameQuery(query);
+    const { data, error } = useGetDataByNameQuery(query);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
@@ -21,12 +17,11 @@ const Search: React.FC <Props> = ({onSearchResult, setLoading}) => {
     const handleSearch = (event: FormEvent) => {
         event.preventDefault();
         if(data) {
-            onSearchResult(data.results);
+            dispatch(setCards(data.results))
         }
         else if(error) {
             throw error;
         }
-        setLoading(isLoading);
     }
 
     return (

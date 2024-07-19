@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Search from "../components/search/Search";
-import { vi } from "vitest";
 
 const localStorageMock = (() => {
   let store: { [key: string]: string } = {};
@@ -21,11 +20,8 @@ const localStorageMock = (() => {
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 test("Clicking the Search button saves the entered value to the local storage", async () => {
-    const mockOnSearchResult = vi.fn();
-    const mockSetLoading = vi.fn();
-
     render(
-      <Search onSearchResult={mockOnSearchResult} setLoading={mockSetLoading} />
+      <Search  />
     );
 
     const input = screen.getByRole('textbox');
@@ -42,11 +38,8 @@ test("Clicking the Search button saves the entered value to the local storage", 
 test("Component retrieves the value from the local storage upon mounting", async () => {
     localStorage.setItem('searchQuery', '"saved value"');
 
-    const mockOnSearchResult = vi.fn();
-    const mockSetLoading = vi.fn();
-
     render(
-      <Search onSearchResult={mockOnSearchResult} setLoading={mockSetLoading} />
+      <Search />
     );
 
     await waitFor(() => {

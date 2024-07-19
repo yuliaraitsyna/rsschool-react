@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import './App.css';
 import Search from './components/search/Search';
 import List from './components/list/List';
-import { Person } from "./models/Person";
 import ErrorButton from './error_handling/ErrorButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Details from './details/Details';
@@ -13,14 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTotalPages } from './redux/pageSlice';
 import { RootState } from './redux/store';
 import { useGetDataByPageQuery } from './redux/starWarsAPI';
+import { setCards } from './redux/cardsSlice';
 
 const App: React.FC = () => {
-  const [result, setResult] = React.useState<Person[]>([]);
-  const [loading, setLoading] = React.useState(false);
   const [selectedItemId, setSelectedItemId] = React.useState<number | null>(null);
   const themeContext = useContext(ThemeContext);
 
   const currentPage = useSelector((state: RootState) => state.pages.currentPage);
+  const cards = useSelector((state: RootState) => state.cards.displayedCards);
 
   const dispatch = useDispatch();
 
@@ -33,8 +32,6 @@ const App: React.FC = () => {
 
   const { data, error, isLoading } = useGetDataByPageQuery(currentPage);
 
-  console.log(data?.results);
-
   useEffect(() => {
     if (!pageParam) {
       navigate(`/rsschool-react/?page=1`, { replace: true });
@@ -44,8 +41,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (data) {
       dispatch(setTotalPages(Math.ceil(data.count / 10)));
-      setResult(data.results);
-      console.log(isLoading)
+      dispatch(setCards(data.results));
     }
     else if(error) {
       throw error;
@@ -70,14 +66,6 @@ const App: React.FC = () => {
     navigate(`/rsschool-react/?page=${currentPage}`);
   };
 
-  const handleSearchResults = (result: Person[]) => {
-    setResult(result);
-  };
-
-  const handleLoadingState = (loading: boolean) => {
-    setLoading(loading);
-  };
-
   if (!themeContext) {
     return null;
   }
@@ -90,13 +78,13 @@ const App: React.FC = () => {
         <ErrorButton />
         <ThemeToggleButton />
         <h1>Star Wars search</h1>
-        <Search onSearchResult={handleSearchResults} setLoading={handleLoadingState} />
+        <Search />
       </div>
       <main>
         <section className='left-section'>
           <h3>Search results</h3>
-          {isLoading || loading ? <div>Loading...</div> : (
-            <List result={result} onItemClick={handleItemClick} />
+          {isLoading ? <div>Loading...</div> : (
+            <List result={cards} onItemClick={handleItemClick} />
           )}
           {error && <div>Error fetching data</div>}
         </section>
