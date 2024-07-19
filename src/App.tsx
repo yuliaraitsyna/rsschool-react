@@ -12,11 +12,12 @@ import Flyout from './components/flyout/Flyout';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTotalPages } from './redux/pageSlice';
 import { RootState } from './redux/store';
+import { useGetDataByPageQuery } from './redux/starWarsAPI';
 
 const App: React.FC = () => {
   const [result, setResult] = React.useState<Person[]>([]);
-  const [loading, setLoading] = React.useState(true);
-  const [selectedItemId, setSelectedItemId] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
+  const [selectedItemId, setSelectedItemId] = React.useState<number | null>(null);
   const themeContext = useContext(ThemeContext);
 
   const currentPage = useSelector((state: RootState) => state.pages.currentPage);
@@ -30,6 +31,10 @@ const App: React.FC = () => {
   const pageParam = query.get('page');
   const detailsParam = query.get('details');
 
+  const { data, error, isLoading } = useGetDataByPageQuery(currentPage);
+
+  console.log(data?.results);
+
   useEffect(() => {
     if (!pageParam) {
       navigate(`/rsschool-react/?page=1`, { replace: true });
@@ -37,41 +42,25 @@ const App: React.FC = () => {
   }, [pageParam, navigate]);
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`https://swapi.dev/api/people/?page=${currentPage}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        return response.json();
-      })
-      .then(data => {
-        setResult(data.results);
-        dispatch(setTotalPages(Math.ceil(data.count / 10)));
-        navigate(`/rsschool-react/?page=${currentPage}`);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
-      });
-  }, [currentPage, dispatch, navigate, pageParam]);
+    if (data) {
+      dispatch(setTotalPages(Math.ceil(data.count / 10)));
+      setResult(data.results);
+      console.log(isLoading)
+    }
+    else if(error) {
+      throw error;
+    }
+
+    navigate(`/rsschool-react/?page=${currentPage}`);
+  }, [data, error, currentPage, dispatch, navigate, isLoading]);
 
   useEffect(() => {
     if (detailsParam) {
       setSelectedItemId(parseInt(detailsParam, 10));
     } else {
-      setSelectedItemId(0);
+      setSelectedItemId(null);
     }
   }, [detailsParam]);
-
-  const handleSearchResults = (result: Person[]) => {
-    setResult(result);
-  };
-
-  const handleLoadingState = (loading: boolean) => {
-    setLoading(loading);
-  };
 
   const handleItemClick = (newItemId: number) => {
     navigate(`/rsschool-react/?page=${currentPage}&details=${newItemId}`);
@@ -79,6 +68,14 @@ const App: React.FC = () => {
 
   const handleCloseDetails = () => {
     navigate(`/rsschool-react/?page=${currentPage}`);
+  };
+
+  const handleSearchResults = (result: Person[]) => {
+    setResult(result);
+  };
+
+  const handleLoadingState = (loading: boolean) => {
+    setLoading(loading);
   };
 
   if (!themeContext) {
@@ -98,24 +95,23 @@ const App: React.FC = () => {
       <main>
         <section className='left-section'>
           <h3>Search results</h3>
-          {loading ? <div>Loading...</div> : (
+          {isLoading || loading ? <div>Loading...</div> : (
             <List result={result} onItemClick={handleItemClick} />
           )}
+          {error && <div>Error fetching data</div>}
         </section>
         <section className='right-section'>
-          {
-            selectedItemId ? 
+          {selectedItemId !== null && (
             <>
               <h3>Details</h3>
-              <Details id={selectedItemId} onClose={handleCloseDetails}/>
-            </> : 
-            null
-          }
+              <Details id={selectedItemId} onClose={handleCloseDetails} />
+            </>
+          )}
         </section>
-        <Flyout></Flyout>
+        <Flyout />
       </main>
     </div>
-  );  
+  );
 }
 
 export default App;

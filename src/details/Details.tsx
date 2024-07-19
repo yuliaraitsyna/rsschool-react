@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Person } from '../models/Person';
+import React from 'react';
 import './Details.css';
+import { useGetDetailsByIdQuery } from '../redux/starWarsAPI';
 
 interface Props {
   id: number;
@@ -8,34 +8,23 @@ interface Props {
 }
 
 const Details: React.FC<Props> = ({ id, onClose }) => {
-  const [person, setPerson] = useState<Person | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://swapi.dev/api/people/${id}/`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setPerson(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
-        setLoading(false);
-      });
-  }, [id]);
+  const { data: person, error, isLoading } = useGetDetailsByIdQuery(id);
 
   const handleCloseClick = () => {
     onClose();
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (!person) return <div>No details available</div>;
+  if (isLoading) {
+    return <div className='details-loading'>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className='details-error'>Error fetching details</div>;
+  }
+
+  if (!person) {
+    return <div className='details-empty'>No details available</div>;
+  }
 
   return (
     <div className='details'>

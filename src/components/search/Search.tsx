@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent } from "react";
 import useLocalStorage from "../../models/useLocalStorage";
 import { Person } from "../../models/Person";
 import "./Search.css"
+import { useGetDataByNameQuery } from "../../redux/starWarsAPI";
 
 interface Props {
     onSearchResult: (result: Person[]) => void;
@@ -11,6 +12,7 @@ interface Props {
 const Search: React.FC <Props> = ({onSearchResult, setLoading}) => {
 
     const [query, setQuery] = useLocalStorage('searchQuery', '');
+    const { data, error, isLoading } = useGetDataByNameQuery(query);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
@@ -18,25 +20,13 @@ const Search: React.FC <Props> = ({onSearchResult, setLoading}) => {
 
     const handleSearch = (event: FormEvent) => {
         event.preventDefault();
-        setLoading(true);
-
-        fetch(`https://swapi.dev/api/people/?search=${query}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Nothing was found");
-                }
-                return response.json();
-            })
-            .then(data => {
-                setTimeout(() => {
-                    onSearchResult(data.results);
-                    setLoading(false);
-                }, 1000)
-            })
-            .catch(error => {
-                console.error("Error during search: ", error);
-                setLoading(false);
-            });
+        if(data) {
+            onSearchResult(data.results);
+        }
+        else if(error) {
+            throw error;
+        }
+        setLoading(isLoading);
     }
 
     return (
