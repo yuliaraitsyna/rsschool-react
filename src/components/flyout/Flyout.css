@@ -9,6 +9,9 @@
 
 .flyout .download-btn {
     height: 50px;
+
+    color: white;
+
     border:none;
     border-radius: 10px;
     background-color: var(--accent-color);
@@ -16,6 +19,9 @@
 
 .flyout .unselect-all-btn {
     height: 50px;
+
+    color: black;
+
     border:none;
     border-radius: 10px;
 }

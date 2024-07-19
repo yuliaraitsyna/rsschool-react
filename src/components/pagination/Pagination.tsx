@@ -1,24 +1,19 @@
+import { RootState } from "../../redux/store";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { nextPage, prevPage } from "../../redux/pageSlice";
 
-
-interface Props {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (newPage: number) => void;
-}
-
-const Panigation: React.FC<Props> = ({currentPage, totalPages, onPageChange}) => {
+const Panigation: React.FC = () => {
+    const dispatch = useDispatch();
+    const currentPage = useSelector((state: RootState) => state.pages.currentPage);
+    const totalPages = useSelector((state: RootState) => state.pages.totalPages);
 
     const handlePreviousPage = () => {
-        if (currentPage > 1) {
-          onPageChange(currentPage - 1);
-        }
+        dispatch(prevPage());
     };
     
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
-          onPageChange(currentPage + 1);
-        }
+        dispatch(nextPage());
     };
 
     return (

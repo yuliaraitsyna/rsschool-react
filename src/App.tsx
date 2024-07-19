@@ -9,14 +9,19 @@ import Details from './details/Details';
 import ThemeToggleButton from './components/theme/ThemeToggleButton';
 import ThemeContext from './components/theme/ThemeContext';
 import Flyout from './components/flyout/Flyout';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTotalPages } from './redux/pageSlice';
+import { RootState } from './redux/store';
 
 const App: React.FC = () => {
   const [result, setResult] = React.useState<Person[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const [page, setPage] = React.useState(1);
-  const [totalPages, setTotalPages] = React.useState(1);
   const [selectedItemId, setSelectedItemId] = React.useState(0);
   const themeContext = useContext(ThemeContext);
+
+  const currentPage = useSelector((state: RootState) => state.pages.currentPage);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,9 +37,6 @@ const App: React.FC = () => {
   }, [pageParam, navigate]);
 
   useEffect(() => {
-    const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
-    setPage(currentPage);
-
     setLoading(true);
     fetch(`https://swapi.dev/api/people/?page=${currentPage}`)
       .then(response => {
@@ -45,14 +47,15 @@ const App: React.FC = () => {
       })
       .then(data => {
         setResult(data.results);
-        setTotalPages(Math.ceil(data.count / 10));
+        dispatch(setTotalPages(Math.ceil(data.count / 10)));
+        navigate(`/rsschool-react/?page=${currentPage}`);
         setLoading(false);
       })
       .catch(error => {
         console.error("Error fetching data: ", error);
         setLoading(false);
       });
-  }, [pageParam]);
+  }, [currentPage, dispatch, navigate, pageParam]);
 
   useEffect(() => {
     if (detailsParam) {
@@ -70,16 +73,12 @@ const App: React.FC = () => {
     setLoading(loading);
   };
 
-  const handlePageChange = (newPage: number) => {
-    navigate(`/rsschool-react/?page=${newPage}`);
-  };
-
   const handleItemClick = (newItemId: number) => {
-    navigate(`/rsschool-react/?page=${page}&details=${newItemId}`);
+    navigate(`/rsschool-react/?page=${currentPage}&details=${newItemId}`);
   };
 
   const handleCloseDetails = () => {
-    navigate(`/rsschool-react/?page=${page}`);
+    navigate(`/rsschool-react/?page=${currentPage}`);
   };
 
   if (!themeContext) {
@@ -100,7 +99,7 @@ const App: React.FC = () => {
         <section className='left-section'>
           <h3>Search results</h3>
           {loading ? <div>Loading...</div> : (
-            <List result={result} currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} onItemClick={handleItemClick}/>
+            <List result={result} onItemClick={handleItemClick} />
           )}
         </section>
         <section className='right-section'>

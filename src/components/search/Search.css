@@ -18,6 +18,8 @@
     width: 20%;
     height: 34px;
 
+    color: white;
+
     border:none;
     background-color: var(--accent-color);
     border-radius: 0 5px 5px 0;

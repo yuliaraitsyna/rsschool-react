@@ -9,13 +9,10 @@ import { RootState } from "../../redux/store";
 
 interface Props {
     result: Person[];
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (newPage: number) => void;
     onItemClick: (id: number) => void;
 }
 
-const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange, onItemClick }) => {
+const List: React.FC<Props> = ({ result, onItemClick }) => {
     const selectedCards = useSelector((state: RootState) => state.cards.selectedCards);
     console.log("Selected:", selectedCards);
     
@@ -30,7 +27,7 @@ const List: React.FC<Props> = ({ result, currentPage, totalPages, onPageChange, 
                         )
                     })}
                 </ul>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+                <Pagination />
             </div> :
             <div>No results found.</div>
     );

@@ -9,7 +9,7 @@ test('Renders specified number of cards', () => {
     render(
         <BrowserRouter>
             <Provider store={store}>
-                <List result={mockPeople} currentPage={1} totalPages={9} onPageChange={() => {}} onItemClick={() => {}}></List>
+                <List result={mockPeople} onItemClick={() => {}}></List>
             </Provider>
         </BrowserRouter>
     );
@@ -22,7 +22,7 @@ test('An appropriate message is displayed if no cards are present', () => {
     render(
         <BrowserRouter>
             <Provider store={store}>
-                <List result={[]} currentPage={0} totalPages={0} onPageChange={() => {}} onItemClick={() => {}}></List>
+                <List result={[]} onItemClick={() => {}}></List>
             </Provider>
         </BrowserRouter>
     );
