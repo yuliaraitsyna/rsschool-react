@@ -1,5 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Search from "../components/search/Search";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 const localStorageMock = (() => {
   let store: { [key: string]: string } = {};
@@ -21,7 +23,9 @@ Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 test("Clicking the Search button saves the entered value to the local storage", async () => {
     render(
-      <Search  />
+      <Provider store={store}>
+        <Search  />
+      </Provider>
     );
 
     const input = screen.getByRole('textbox');
@@ -39,7 +43,9 @@ test("Component retrieves the value from the local storage upon mounting", async
     localStorage.setItem('searchQuery', '"saved value"');
 
     render(
-      <Search />
+      <Provider store={store}>
+        <Search  />
+      </Provider>
     );
 
     await waitFor(() => {

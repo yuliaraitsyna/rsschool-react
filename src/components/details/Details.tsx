@@ -1,6 +1,6 @@
 import React from 'react';
 import './Details.css';
-import { useGetDetailsByIdQuery } from '../redux/starWarsAPI';
+import { useGetDetailsByIdQuery } from '../../redux/starWarsAPI';
 
 interface Props {
   id: number;

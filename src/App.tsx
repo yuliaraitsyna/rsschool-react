@@ -4,7 +4,7 @@ import Search from './components/search/Search';
 import List from './components/list/List';
 import ErrorButton from './error_handling/ErrorButton';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Details from './details/Details';
+import Details from './components/details/Details';
 import ThemeToggleButton from './components/theme/ThemeToggleButton';
 import ThemeContext from './components/theme/ThemeContext';
 import Flyout from './components/flyout/Flyout';

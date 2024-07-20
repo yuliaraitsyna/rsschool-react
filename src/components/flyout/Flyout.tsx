@@ -14,7 +14,6 @@ const Flyout: React.FC = () => {
     }
 
     const hadnleDownload = () => {
-        console.log(selectedCards)
         downloadCSV(selectedCards);
     }
     

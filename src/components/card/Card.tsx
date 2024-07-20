@@ -1,11 +1,9 @@
-
 import { Person } from "../../models/Person";
 import "./Card.css"
 import extractIdFromUrl from "../../models/extractIdFromUrl";
 import { selectCard, unselectCard } from "../../redux/cardsSlice"
 import { useDispatch } from "react-redux";
 import React from "react";
-import store from "../../redux/store";
 
 interface Props {
     data: Person;
@@ -27,8 +25,6 @@ const Card: React.FC<Props> = ({ data, onClick, isSelected }) => {
         else {
             dispatch(unselectCard(extractIdFromUrl(data.url)));
         }
-
-        console.log(store.getState())
     }
 
     return (

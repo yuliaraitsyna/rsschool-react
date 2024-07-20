@@ -1,14 +1,18 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import Details from "../details/Details"
+import Details from "../components/details/Details"
 import { mockPeople } from "../mocks/mockPeople";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 const mockPerson = mockPeople[0];
 
 test("Loading indicator is displayed while fetching data", async () => {
     render(
         <BrowserRouter>
-            <Details id={1} onClose={() => {}}></Details>
+            <Provider store={store}>
+                <Details id={1} onClose={() => {}}></Details>
+            </Provider>
         </BrowserRouter>
     );
 
@@ -18,7 +22,9 @@ test("Loading indicator is displayed while fetching data", async () => {
 test("Detailed card component correctly displays the detailed card data", async () => {
     render(
         <BrowserRouter>
-            <Details id={1} onClose={() => {}}></Details>
+            <Provider store={store}>
+                <Details id={1} onClose={() => {}}></Details>
+            </Provider>
         </BrowserRouter>
     );
 
@@ -39,7 +45,9 @@ test("Clicking the close button hides the component", async () => {
 
     render(
         <BrowserRouter>
-            <Details id={1} onClose={mockOnClose}></Details>
+            <Provider store={store}>
+                <Details id={1} onClose={mockOnClose}></Details>
+            </Provider>
         </BrowserRouter>
     );
 

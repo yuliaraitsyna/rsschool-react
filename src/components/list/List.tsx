@@ -14,7 +14,6 @@ interface Props {
 
 const List: React.FC<Props> = ({ result, onItemClick }) => {
     const selectedCards = useSelector((state: RootState) => state.cards.selectedCards);
-    console.log("Selected:", selectedCards);
     
     return (
         result.length > 0 ?
