@@ -5,6 +5,7 @@ import Card from "../card/Card";
 import extractIdFromUrl from "../../models/extractIdFromUrl";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import styles from "./List.module.css"
 
 interface Props {
     result: Person[];
@@ -16,7 +17,7 @@ const List: React.FC<Props> = ({ result, onItemClick }) => {
     
     return (
         result.length > 0 ?
-            <div className="result-list">
+            <div className={styles["result-list"]}>
                 <ul>
                     {result.map((person) => {
                         const selected = selectedCards.some(card => extractIdFromUrl(card.url) === extractIdFromUrl(person.url));

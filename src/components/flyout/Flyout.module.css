@@ -1,0 +1,27 @@
+.flyout {
+    display: inline-flex;
+    gap:10px;
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.flyout .download-btn {
+    height: 50px;
+
+    color: white;
+
+    border:none;
+    border-radius: 10px;
+    background-color: var(--accent-color);
+}
+
+.flyout .unselect-all-btn {
+    height: 50px;
+
+    color: black;
+
+    border:none;
+    border-radius: 10px;
+}

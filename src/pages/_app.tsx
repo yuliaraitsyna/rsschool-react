@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import { wrapper } from '../components/redux/store';
 import ErrorBoundary from '../components/error_handling/ErrorBoundary';
 import ThemeProvider from '../components/theme/ThemeProvider';
+import "../styles/global.css"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
