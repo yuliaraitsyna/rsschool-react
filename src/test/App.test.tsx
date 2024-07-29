@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../components/redux/store";
 import { BrowserRouter } from "react-router-dom";
 import ThemeProvider from "../components/theme/ThemeProvider";
-import App from "../App";
+import App from "../pages/_app";
 
 test('renders App component', () => {
     render(

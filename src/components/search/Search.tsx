@@ -1,9 +1,8 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import useLocalStorage from "../../models/useLocalStorage";
-import "./Search.css"
-import { useGetDataByNameQuery } from "../../redux/starWarsAPI";
+import { useGetDataByNameQuery } from "../redux/starWarsAPI";
 import { useDispatch } from "react-redux";
-import { setCards } from "../../redux/cardsSlice";
+import { setCards } from "../redux/cardsSlice";
 
 const Search: React.FC = () => {
     const dispatch = useDispatch();

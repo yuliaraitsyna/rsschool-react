@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Person } from "../models/Person";
-import extractIdFromUrl from "../models/extractIdFromUrl";
+import { Person } from "../../models/Person";
+import extractIdFromUrl from "../../models/extractIdFromUrl";
 
 export interface CardsState {
     displayedCards: Person[],

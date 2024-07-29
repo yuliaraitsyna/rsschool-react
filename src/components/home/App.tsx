@@ -1,18 +1,17 @@
 import React, { useContext, useEffect } from 'react';
-import './App.css';
-import Search from './components/search/Search';
-import List from './components/list/List';
-import ErrorButton from './error_handling/ErrorButton';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Details from './components/details/Details';
-import ThemeToggleButton from './components/theme/ThemeToggleButton';
-import ThemeContext from './components/theme/ThemeContext';
-import Flyout from './components/flyout/Flyout';
+import ThemeContext from "../theme/ThemeContext"
 import { useDispatch, useSelector } from 'react-redux';
-import { setTotalPages } from './redux/pageSlice';
-import { RootState } from './redux/store';
-import { useGetDataByPageQuery } from './redux/starWarsAPI';
-import { setCards } from './redux/cardsSlice';
+import ErrorButton from '../error_handling/ErrorButton'
+import ThemeToggleButton from '../theme/ThemeToggleButton'
+import Search from "../search/Search"
+import Details from "../details/Details"
+import List from "../list/List"
+import Flyout from "../flyout/Flyout"
+import { RootState } from '../redux/store'
+import { setTotalPages } from '../redux/pageSlice';
+import { setCards } from '../redux/cardsSlice';
+import { useGetDataByPageQuery } from '../redux/starWarsAPI';
+
 
 const App: React.FC = () => {
   const [selectedItemId, setSelectedItemId] = React.useState<number | null>(null);
@@ -23,10 +22,7 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const query = new URLSearchParams(location.search);
+  const query = new URLSearchParams();
   const pageParam = query.get('page');
   const detailsParam = query.get('details');
 
@@ -34,9 +30,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!pageParam) {
-      navigate(`/rsschool-react/?page=1`, { replace: true });
     }
-  }, [pageParam, navigate]);
+  }, [pageParam]);
 
   useEffect(() => {
     if (data) {
@@ -47,8 +42,7 @@ const App: React.FC = () => {
       throw error;
     }
 
-    navigate(`/rsschool-react/?page=${currentPage}`);
-  }, [data, error, currentPage, dispatch, navigate, isLoading]);
+  }, [data, error, currentPage, dispatch, isLoading]);
 
   useEffect(() => {
     if (detailsParam) {
@@ -59,11 +53,11 @@ const App: React.FC = () => {
   }, [detailsParam]);
 
   const handleItemClick = (newItemId: number) => {
-    navigate(`/rsschool-react/?page=${currentPage}&details=${newItemId}`);
+    
   };
 
   const handleCloseDetails = () => {
-    navigate(`/rsschool-react/?page=${currentPage}`);
+    
   };
 
   if (!themeContext) {
@@ -103,3 +97,4 @@ const App: React.FC = () => {
 }
 
 export default App;
+

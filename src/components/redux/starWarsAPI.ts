@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Person } from '../models/Person';
+import { Person } from '../../models/Person';
 
 export const starWarsAPI = createApi({
   reducerPath: 'starWarsAPI',

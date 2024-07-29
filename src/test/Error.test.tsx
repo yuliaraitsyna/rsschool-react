@@ -1,12 +1,12 @@
-import ErrorBoundary from '../error_handling/ErrorBoundary'
+import ErrorBoundary from '../components/error_handling/ErrorBoundary'
 import { fireEvent, render, screen } from '@testing-library/react'
-import ErrorButton from '../error_handling/ErrorButton';
+import ErrorButton from '../components/error_handling/ErrorButton';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import ThemeProvider from '../components/theme/ThemeProvider';
-import App from '../App';
-import ErrorPage from '../error_handling/ErrorPage';
+import App from '../pages/_app';
+import ErrorPage from '../components/error_handling/ErrorPage';
 
 test("Error appears when clicking the button", () => {
     render (

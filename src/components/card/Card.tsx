@@ -1,7 +1,6 @@
 import { Person } from "../../models/Person";
-import "./Card.css"
 import extractIdFromUrl from "../../models/extractIdFromUrl";
-import { selectCard, unselectCard } from "../../redux/cardsSlice"
+import { selectCard, unselectCard } from "../redux/cardsSlice"
 import { useDispatch } from "react-redux";
 import React from "react";
 

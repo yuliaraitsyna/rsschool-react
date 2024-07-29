@@ -1,11 +1,10 @@
 import React from "react";
 import { Person } from "../../models/Person";
-import "./List.css";
 import Pagination from "../pagination/Pagination";
 import Card from "../card/Card";
 import extractIdFromUrl from "../../models/extractIdFromUrl";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "../redux/store";
 
 interface Props {
     result: Person[];

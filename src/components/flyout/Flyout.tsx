@@ -1,8 +1,7 @@
 import React from "react"
-import { RootState } from "../../redux/store";
+import { RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { unselectAll } from "../../redux/cardsSlice";
-import "./Flyout.css"
+import { unselectAll } from "../redux/cardsSlice";
 import downloadCSV from "../../models/downloadCSV";
 
 const Flyout: React.FC = () => {

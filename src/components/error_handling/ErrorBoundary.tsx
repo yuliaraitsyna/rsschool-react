@@ -1,6 +1,4 @@
 import React from "react";
-import errorIcon from "../assets/error.png";
-import "./ErrorBoundary.css"
 
 interface Props {
     children: React.ReactNode;
@@ -28,7 +26,7 @@ class ErrorBoundary extends React.Component<Props, State> {
             return (
                 <div className="errorMessage">
                     <h1>Something went wrong</h1>
-                    <img src={errorIcon}></img>
+                    
                 </div>
             );
         }
