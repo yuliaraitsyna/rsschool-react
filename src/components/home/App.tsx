@@ -1,63 +1,68 @@
-import React, { useContext, useEffect } from 'react';
-import ThemeContext from "../theme/ThemeContext"
+import React, { useContext, useEffect, useCallback } from 'react';
+import ThemeContext from '../theme/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorButton from '../error_handling/ErrorButton'
-import ThemeToggleButton from '../theme/ThemeToggleButton'
-import Search from "../search/Search"
-import Details from "../details/Details"
-import List from "../list/List"
-import Flyout from "../flyout/Flyout"
-import { RootState } from '../redux/store'
+import ErrorButton from '../error_handling/ErrorButton';
+import ThemeToggleButton from '../theme/ThemeToggleButton';
+import Search from '../search/Search';
+import Details from '../details/Details';
+import List from '../list/List';
+import Flyout from '../flyout/Flyout';
+import { RootState } from '../redux/store';
 import { setTotalPages } from '../redux/pageSlice';
 import { setCards } from '../redux/cardsSlice';
 import { useGetDataByPageQuery } from '../redux/starWarsAPI';
-
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
 const App: React.FC = () => {
   const [selectedItemId, setSelectedItemId] = React.useState<number | null>(null);
   const themeContext = useContext(ThemeContext);
+  const router = useRouter();
 
   const currentPage = useSelector((state: RootState) => state.pages.currentPage);
   const cards = useSelector((state: RootState) => state.cards.displayedCards);
-
   const dispatch = useDispatch();
 
-  const query = new URLSearchParams();
-  const pageParam = query.get('page');
-  const detailsParam = query.get('details');
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const pageParam = params.get('page') || '1';
+  const detailsParam = params.get('details');
 
-  const { data, error, isLoading } = useGetDataByPageQuery(currentPage);
-
-  useEffect(() => {
-    if (!pageParam) {
-    }
-  }, [pageParam]);
+  const { data, error, isLoading } = useGetDataByPageQuery(Number(pageParam));
 
   useEffect(() => {
-    if (data) {
-      dispatch(setTotalPages(Math.ceil(data.count / 10)));
-      dispatch(setCards(data.results));
+    if (!params.has('page')) {
+      router.replace(`/?page=${currentPage}`, undefined, { shallow: true });
     }
-    else if(error) {
-      throw error;
-    }
-
-  }, [data, error, currentPage, dispatch, isLoading]);
+  }, [params, router]);
 
   useEffect(() => {
     if (detailsParam) {
-      setSelectedItemId(parseInt(detailsParam, 10));
+      setSelectedItemId(parseInt(detailsParam));
     } else {
       setSelectedItemId(null);
     }
   }, [detailsParam]);
 
+  useEffect(() => {
+    if (data) {
+      dispatch(setTotalPages(Math.ceil(data.count / 10)));
+      dispatch(setCards(data.results));
+    } else if (error) {
+      console.error("Error fetching data:", error);
+    }
+    router.replace(`/?page=${currentPage}`);
+
+  }, [data, error, currentPage, dispatch, isLoading]);
+
   const handleItemClick = (newItemId: number) => {
-    
+    setSelectedItemId(newItemId);
+    router.replace(`/?page=${currentPage}&details=${newItemId}`, undefined, { shallow: true });
   };
 
   const handleCloseDetails = () => {
-    
+    setSelectedItemId(null);
+    router.replace(`/?page=${currentPage}`, undefined, { shallow: true });
   };
 
   if (!themeContext) {
@@ -71,12 +76,12 @@ const App: React.FC = () => {
       <div className='upper-component'>
         <ErrorButton />
         <ThemeToggleButton />
-        <h1>Star Wars search</h1>
+        <h1>Star Wars Search</h1>
         <Search />
       </div>
       <main>
         <section className='left-section'>
-          <h3>Search results</h3>
+          <h3>Search Results</h3>
           {isLoading ? <div>Loading...</div> : (
             <List result={cards} onItemClick={handleItemClick} />
           )}
@@ -94,7 +99,6 @@ const App: React.FC = () => {
       </main>
     </div>
   );
-}
+};
 
 export default App;
-
