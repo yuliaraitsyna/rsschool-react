@@ -1,10 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import cardsSlice from './cardsSlice';
 import pageSlice from './pageSlice';
 import { starWarsAPI } from './starWarsAPI';
 import { createWrapper } from 'next-redux-wrapper';
 
-const store = () => configureStore({
+export const rootReducer = combineReducers({
+  [starWarsAPI.reducerPath]: starWarsAPI.reducer,
+  cards: cardsSlice.reducer,
+  pages: pageSlice.reducer,
+});
+
+export const makeStore = () => configureStore({
   reducer: {
     [starWarsAPI.reducerPath]: starWarsAPI.reducer,
     cards: cardsSlice.reducer,
@@ -14,6 +20,11 @@ const store = () => configureStore({
     getDefaultMiddleware().concat(starWarsAPI.middleware),
 });
 
-export type RootState = ReturnType<ReturnType<typeof store>['getState']>;
-export const wrapper = createWrapper(store, {debug: true});
+const store = makeStore();
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export const wrapper = createWrapper(makeStore, { debug: true });
+
 export default store;
