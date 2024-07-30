@@ -11,15 +11,15 @@ import '@testing-library/jest-dom';
 
 test('renders App component', async () => {
     render(
-      <ThemeProvider>
-        <ApiProvider api={starWarsAPI}>
-          <Provider store={store}>
-            <RouterContext.Provider value={mockRouter}>
-              <App></App>
-            </RouterContext.Provider>
-          </Provider>
-        </ApiProvider>
-      </ThemeProvider>
+        <ThemeProvider>
+          <ApiProvider api={starWarsAPI}>
+            <Provider store={store}>
+              <RouterContext.Provider value={mockRouter}>
+                <App></App>
+              </RouterContext.Provider>
+            </Provider>
+          </ApiProvider>
+       </ThemeProvider>
     );
   
     await waitFor(() => {
