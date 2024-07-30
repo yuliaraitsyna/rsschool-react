@@ -9,7 +9,6 @@ import { starWarsAPI } from "../components/redux/starWarsAPI";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import '@testing-library/jest-dom';
 
-
 test('renders App component', async () => {
     render(
       <ThemeProvider>
