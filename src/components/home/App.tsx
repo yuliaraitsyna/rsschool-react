@@ -1,3 +1,4 @@
+'use client'
 import React, { useContext, useEffect, useCallback } from 'react';
 import ThemeContext from '../theme/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +12,7 @@ import { RootState } from '../redux/store';
 import { setTotalPages } from '../redux/pageSlice';
 import { setCards } from '../redux/cardsSlice';
 import { useGetDataByPageQuery } from '../redux/starWarsAPI';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
 const App: React.FC = () => {
@@ -32,7 +33,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!params.has('page')) {
-      router.replace(`/?page=${currentPage}`, undefined, { shallow: true });
+      router.replace(`/?page=${currentPage}`, undefined);
     }
   }, [params, router]);
 
@@ -57,12 +58,12 @@ const App: React.FC = () => {
 
   const handleItemClick = (newItemId: number) => {
     setSelectedItemId(newItemId);
-    router.replace(`/?page=${currentPage}&details=${newItemId}`, undefined, { shallow: true });
+    router.replace(`/?page=${currentPage}&details=${newItemId}`, undefined);
   };
 
   const handleCloseDetails = () => {
     setSelectedItemId(null);
-    router.replace(`/?page=${currentPage}`, undefined, { shallow: true });
+    router.replace(`/?page=${currentPage}`, undefined);
   };
 
   if (!themeContext) {
