@@ -1,35 +1,13 @@
 "use client";
-import React, { Suspense } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/global.css';
-import { Providers } from './providers';
+import { Providers } from '../components/redux/providers';
 import App from '../components/home/App';
-import { starWarsAPI, useGetDataByPageQuery, useGetDetailsByIdQuery } from '../components/redux/starWarsAPI';
-import { useDispatch } from 'react-redux';
+import { useGetDataByPageQuery } from '../components/redux/starWarsAPI';
 
-const fetchData = async () => {
-    try {
-      const response = await starWarsAPI.endpoints.getDataByPage.initiate(1);
-      return response;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return null;
-    }
-};
-
-const Page: React.FC = async () => {
-    const data = useGetDataByPageQuery(1);
-    console.log(data)
-    
-  
-    if (!data) {
-        return <div>Error fetching data</div>;
-    }
-    else console.log(data);
-    
+const Page: React.FC = () => {
   return (
-        <Suspense>
-            <App/>
-        </Suspense>
+    <h1>Hello</h1>
   );
 };
 
