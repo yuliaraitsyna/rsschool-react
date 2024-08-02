@@ -1,31 +1,47 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { Provider } from "react-redux";
-import store from "../components/redux/store";
-import ThemeProvider from "../components/theme/ThemeProvider";
-import App from "../components/home/App"
-import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
-import { mockRouter } from "src/mocks/mockRouter";
-import { starWarsAPI } from "../components/redux/starWarsAPI";
-import { ApiProvider } from "@reduxjs/toolkit/query/react";
+
+import App from "../components/home/App";
 import '@testing-library/jest-dom';
 import { mockPeople } from "src/mocks/mockPeople";
+import { Providers } from "@components/redux/providers";
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    route: '/',
+    pathname: '/',
+    query: {},
+    asPath: '/',
+    basePath: '',
+    push: jest.fn(),
+    replace: jest.fn(),
+    reload: jest.fn(),
+    back: jest.fn(),
+    forward: jest.fn(),
+    prefetch: jest.fn().mockResolvedValue(undefined),
+    beforePopState: jest.fn(),
+    events: {
+      on: jest.fn(),
+      off: jest.fn(),
+      emit: jest.fn(),
+    },
+    isFallback: false,
+    isLocaleDomain: false,
+    isReady: true,
+    defaultLocale: 'en',
+    domainLocales: [],
+    isPreview: false,
+  }),
+  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams()),
+}));
 
 test('renders App component', async () => {
     render(
-        <ThemeProvider>
-          <ApiProvider api={starWarsAPI}>
-            <Provider store={store}>
-              <RouterContext.Provider value={mockRouter}>
-                <App initialData={mockPeople}></App>
-              </RouterContext.Provider>
-            </Provider>
-          </ApiProvider>
-       </ThemeProvider>
+        <Providers>
+            <App initialData={mockPeople} />
+        </Providers>
     );
-  
+
     await waitFor(() => {
-      expect(screen.getByText(/Star Wars Search/i)).toBeInTheDocument();
+        expect(screen.getByText(/Star Wars Search/i)).toBeInTheDocument();
     });
 });
-
-
