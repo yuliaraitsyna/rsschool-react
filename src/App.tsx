@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!pageParam) {
-      navigate(`/rsschool-react/?page=1`, { replace: true });
+      navigate(`/?page=1`, { replace: true });
     }
   }, [pageParam, navigate]);
 
@@ -47,7 +47,7 @@ const App: React.FC = () => {
       throw error;
     }
 
-    navigate(`/rsschool-react/?page=${currentPage}`);
+    navigate(`/?page=${currentPage}`);
   }, [data, error, currentPage, dispatch, navigate, isLoading]);
 
   useEffect(() => {
@@ -59,11 +59,11 @@ const App: React.FC = () => {
   }, [detailsParam]);
 
   const handleItemClick = (newItemId: number) => {
-    navigate(`/rsschool-react/?page=${currentPage}&details=${newItemId}`);
+    navigate(`/?page=${currentPage}&details=${newItemId}`);
   };
 
   const handleCloseDetails = () => {
-    navigate(`/rsschool-react/?page=${currentPage}`);
+    navigate(`/?page=${currentPage}`);
   };
 
   if (!themeContext) {

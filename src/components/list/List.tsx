@@ -14,7 +14,7 @@ interface Props {
 
 const List: React.FC<Props> = ({ result, onItemClick }) => {
     const selectedCards = useSelector((state: RootState) => state.cards.selectedCards);
-    
+    onItemClick;
     return (
         result.length > 0 ?
             <div className="result-list">
