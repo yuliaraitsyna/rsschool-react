@@ -15,8 +15,13 @@ import { setCards } from '../redux/cardsSlice';
 import { useGetDataByPageQuery } from '../redux/starWarsAPI';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
+import { Person } from '@models/Person';
 
-const App: React.FC = () => {
+interface AppProps {
+  initialData: Person[],
+}
+
+const App: React.FC<AppProps> = ({initialData}) => {
   const [selectedItemId, setSelectedItemId] = React.useState<number | null>(null);
   const themeContext = useContext(ThemeContext);
   const router = useRouter();

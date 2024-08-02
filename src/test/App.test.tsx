@@ -8,6 +8,7 @@ import { mockRouter } from "src/mocks/mockRouter";
 import { starWarsAPI } from "../components/redux/starWarsAPI";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import '@testing-library/jest-dom';
+import { mockPeople } from "src/mocks/mockPeople";
 
 test('renders App component', async () => {
     render(
@@ -15,7 +16,7 @@ test('renders App component', async () => {
           <ApiProvider api={starWarsAPI}>
             <Provider store={store}>
               <RouterContext.Provider value={mockRouter}>
-                <App></App>
+                <App initialData={mockPeople}></App>
               </RouterContext.Provider>
             </Provider>
           </ApiProvider>
