@@ -46,5 +46,16 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx eslint --fix "
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "sh .husky/pre-commit",
+      "pre-push": "sh .husky/pre-push"
+    }
   }
 }
