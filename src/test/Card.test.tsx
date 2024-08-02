@@ -1,4 +1,3 @@
-import { BrowserRouter } from "react-router-dom";
 import extractIdFromUrl from "../models/extractIdFromUrl";
 import Card from "../components/card/Card";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -19,10 +18,11 @@ beforeEach(() => {
 });
 
 test("Card component renders the relevant card data", () => {
+    const mockOnClick = jest.fn();
     render(
         <RouterContext.Provider value={mockRouter}>
             <Provider store={store}>
-                <Card key={extractIdFromUrl(mockPerson.url)} data={mockPerson} onClick={() => {}} isSelected={false} />
+                <Card key={extractIdFromUrl(mockPerson.url)} data={mockPerson} onClick={mockOnClick} isSelected={false} />
             </Provider>
         </RouterContext.Provider>
     );
@@ -37,7 +37,7 @@ test("Clicking on a card opens a detailed card component", async () => {
     render(
         <RouterContext.Provider value={mockRouter}>
             {mockPeople.map(person => (
-                <Provider store={store}>
+                <Provider key={extractIdFromUrl(person.url)} store={store}>
                     <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} isSelected={false}/>
                 </Provider>
             ))}
@@ -57,7 +57,7 @@ test("Clicking triggers an additional API call to fetch detailed information", a
     render(
         <RouterContext.Provider value={mockRouter}>
             {mockPeople.map((person) => (
-                <Provider store={store}>
+                <Provider key={extractIdFromUrl(person.url)} store={store}>
                     <Card key={extractIdFromUrl(person.url)} data={person} onClick={handleClick} isSelected={false}/>
                 </Provider>
             ))}

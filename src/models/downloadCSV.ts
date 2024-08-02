@@ -1,6 +1,6 @@
 import { Person } from "./Person";
 
-const downloadCSV = (data: Person[], filename: string = "data.csv") => {
+const downloadCSV = (data: Person[], filename = "data.csv") => {
     filename = `${data.length}_people.csv`;
 
     const headers = Object.keys(data[0]).join(',');
@@ -9,7 +9,7 @@ const downloadCSV = (data: Person[], filename: string = "data.csv") => {
     });
 
     const result = [headers, ...rows].join('\n');
-    const blob = new Blob([result], {type: 'text/csv'});
+    const blob = new Blob([result], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     
     const a = document.createElement('a');

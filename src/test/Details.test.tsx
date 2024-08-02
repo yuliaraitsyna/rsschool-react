@@ -21,11 +21,13 @@ beforeEach(() => {
 test("Loading indicator is displayed while fetching data", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(mockPerson));
 
+    const mockOnClose = jest.fn();
+
     render(
         <RouterContext.Provider value={mockRouter}>
             <ApiProvider api={starWarsAPI}>
                 <Provider store={store}>
-                    <Details id={1} onClose={() => {}} />
+                    <Details id={1} onClose={mockOnClose} />
                 </Provider>
             </ApiProvider>
         </RouterContext.Provider>
@@ -47,11 +49,13 @@ test("Detailed card component correctly displays the detailed card data", async 
         url: 'https://swapi.dev/api/people/1/'
     }));
 
+    const mockOnClose = jest.fn();
+
     render(
         <RouterContext.Provider value={mockRouter}>
             <ApiProvider api={starWarsAPI}>
                 <Provider store={store}>
-                    <Details id={1} onClose={() => {}} />
+                    <Details id={1} onClose={mockOnClose} />
                 </Provider>
             </ApiProvider>
         </RouterContext.Provider>

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Pagination from "../components/pagination/Pagination";
 import { Provider } from "react-redux";
 import store from "../components/redux/store";

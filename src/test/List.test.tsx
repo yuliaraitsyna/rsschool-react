@@ -1,4 +1,3 @@
-import { BrowserRouter } from "react-router-dom"
 import List from "../components/list/List"
 import { render, screen } from "@testing-library/react";
 import { mockPeople } from "../mocks/mockPeople";
@@ -9,10 +8,11 @@ import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtim
 import { mockRouter } from "src/mocks/mockRouter";
 
 test('Renders specified number of cards', () => {
+    const mockOnItemClick = jest.fn();
     render(
         <RouterContext.Provider value={mockRouter}>
             <Provider store={store}>
-                <List result={mockPeople} onItemClick={() => {}}></List>
+                <List result={mockPeople} onItemClick={mockOnItemClick}></List>
             </Provider>
         </RouterContext.Provider>
     );
@@ -22,10 +22,11 @@ test('Renders specified number of cards', () => {
 });
 
 test('An appropriate message is displayed if no cards are present', () => {
+    const mockOnItemClick = jest.fn();
     render(
         <RouterContext.Provider value={mockRouter}>
             <Provider store={store}>
-                <List result={[]} onItemClick={() => {}}></List>
+                <List result={[]} onItemClick={mockOnItemClick}></List>
             </Provider>
         </RouterContext.Provider>
     );

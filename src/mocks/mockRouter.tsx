@@ -1,6 +1,3 @@
-// __mocks__/nextRouter.ts
-import { useRouter } from 'next/router';
-
 export const mockRouter = {
   route: '/',
   pathname: '/',

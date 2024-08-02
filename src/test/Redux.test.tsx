@@ -64,10 +64,11 @@ describe('cards slice', () => {
 
 describe('Search Component', () => {
     it('should display search results', async () => {
+      const mockItemClick = jest.fn();
       render(
         <Provider store={store}>
             <Search/>
-            <List result={mockPeople} onItemClick={() => {}}></List>
+            <List result={mockPeople} onItemClick={mockItemClick}></List>
         </Provider>
       );
   
