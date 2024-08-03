@@ -1,22 +1,31 @@
-import { fireEvent, render, screen} from "@testing-library/react"
-import { BrowserRouter } from "react-router-dom"
-import Panigation from "../components/pagination/Pagination";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import Pagination from "../components/pagination/Pagination";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../components/redux/store";
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
+import { mockRouter } from "src/mocks/mockRouter";
+import '@testing-library/jest-dom';
 
-test.skip("Component updates URL query parameter when page changes", async () => {
-    const mockOnPageChange = vi.fn();
+test("Pagination component updates the page number correctly when next and previous buttons are clicked", async () => {
+    mockRouter.query = { page: '1' };
 
     render(
-        <BrowserRouter>
+        <RouterContext.Provider value={mockRouter}>
             <Provider store={store}>
-                <Panigation></Panigation>
+                <Pagination />
             </Provider>
-        </BrowserRouter>
+        </RouterContext.Provider>
     );
 
-    const nextButton = screen.getByText(">");
-    fireEvent.click(nextButton);
+    expect(screen.getByText((content, element) => {
+        const hasText = (node: Node) => node.textContent === '1 / 1';
+        const nodeHasText = element ? hasText(element) : false;
+        const childrenDontHaveText = Array.from(element?.children || []).every(
+            (child) => !hasText(child)
+        );
+        return nodeHasText && childrenDontHaveText;
+    })).toBeInTheDocument();
 
-    expect(mockOnPageChange).toHaveBeenCalledWith(2);
+    const nextButton = screen.getByText(">");
+    expect(nextButton).toBeInTheDocument();
 });

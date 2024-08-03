@@ -1,7 +1,7 @@
-import { RootState } from "../../redux/store";
+import { RootState } from "../redux/store";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nextPage, prevPage } from "../../redux/pageSlice";
+import { nextPage, prevPage } from "../redux/pageSlice";
 
 const Panigation: React.FC = () => {
     const dispatch = useDispatch();
