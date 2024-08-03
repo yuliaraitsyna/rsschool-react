@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import useLocalStorage from "../../models/useLocalStorage";
-import "./Search.css"
+import styles from "./Search.module.css"
 import { useGetDataByNameQuery } from "../../redux/starWarsAPI";
 import { useDispatch } from "react-redux";
 import { setCards } from "../../redux/cardsSlice";
@@ -25,7 +25,7 @@ const Search: React.FC = () => {
     }
 
     return (
-        <div className="search-bar">
+        <div className={styles["search-bar"]}>
             <form onSubmit={handleSearch}>
                 <input
                     type="text"

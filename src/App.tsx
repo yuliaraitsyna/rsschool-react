@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import './App.css';
 import Search from './components/search/Search';
 import List from './components/list/List';
 import ErrorButton from './error_handling/ErrorButton';
@@ -13,6 +12,8 @@ import { setTotalPages } from './redux/pageSlice';
 import { RootState } from './redux/store';
 import { useGetDataByPageQuery } from './redux/starWarsAPI';
 import { setCards } from './redux/cardsSlice';
+import styles from "./App.module.css"
+import 'whatwg-fetch';
 
 const App: React.FC = () => {
   const [selectedItemId, setSelectedItemId] = React.useState<number | null>(null);
@@ -73,7 +74,7 @@ const App: React.FC = () => {
   const { theme } = themeContext;
 
   return (
-    <div className={`app ${theme}`}>
+    <div className={styles[`app ${theme}`]}>
       <div className='upper-component'>
         <ErrorButton />
         <ThemeToggleButton />
@@ -81,14 +82,14 @@ const App: React.FC = () => {
         <Search />
       </div>
       <main>
-        <section className='left-section'>
+        <section className={styles['left-section']}>
           <h3>Search results</h3>
           {isLoading ? <div>Loading...</div> : (
             <List result={cards} onItemClick={handleItemClick} />
           )}
           {error && <div>Error fetching data</div>}
         </section>
-        <section className='right-section'>
+        <section className={styles['right-section']}>
           {selectedItemId !== null && (
             <>
               <h3>Details</h3>

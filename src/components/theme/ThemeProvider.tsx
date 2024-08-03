@@ -1,8 +1,11 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import ThemeContext from "./ThemeContext";
 
+interface ThemeProviderProps {
+  children: React.ReactNode,
+}
 
-const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const [theme, setTheme] = useState('dark');
   
     const toggleTheme = () => {
