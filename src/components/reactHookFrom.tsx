@@ -1,7 +1,12 @@
 import React from "react";
 import './forms.css'
+import { RootState } from "./redux/store";
+import { useSelector } from "react-redux";
 
 const ReactHookForm: React.FC = () => {
+
+    const countriesList = useSelector((state: RootState) => state.countries.countries);
+
     return(
         <>
             <form className="form">
@@ -35,12 +40,23 @@ const ReactHookForm: React.FC = () => {
                 <span>
                     Gender
                     <input type="radio" name="Female"></input>
-                        <label>Female</label>
+                        <label htmlFor="Female">Female</label>
                     <input type="radio" name="Male"></input>
-                        <label>Male</label>
+                        <label htmlFor="Male">Male</label>
                     <br/>
                 </span>
                 <input type="file" name="filename"></input>
+                <select className="countries-list">
+                    {
+                        countriesList.map((country: string, index: number) => 
+                            <option key={index}>{country}</option>
+                        )
+                    }
+                </select>
+                <div className="terms">
+                    <input type="checkbox" name="terms_and_conditions"></input>
+                    <label htmlFor="terms_and_conditions">Agree with terms and condiitions</label>
+                </div>
                 <button className="submit-btn">Submit</button>
             </form>
         </>
