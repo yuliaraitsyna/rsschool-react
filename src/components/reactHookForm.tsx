@@ -17,9 +17,11 @@ const ReactHookForm: React.FC = () => {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
+        formState: { errors, isValid },
         reset,
-    } = useForm<Person>();
+    } = useForm<Person>({
+        mode: "onChange",
+    });
 
     const password = watch('password');
 
@@ -32,22 +34,59 @@ const ReactHookForm: React.FC = () => {
         navigate("/");
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const convertToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            setSelectedFile(URL.createObjectURL(file));
+            const isValidSize = file.size <= 2 * 1024 * 1024;
+            const isValidExtension = file.type === "image/jpeg" || file.type === "image/png";
+
+            if (!isValidSize) {
+                alert("File size should be less than 2MB");
+                return;
+            }
+
+            if (!isValidExtension) {
+                alert("Only JPEG and PNG files are allowed");
+                return;
+            }
+
+            try {
+                const base64String = await convertToBase64(file);
+                console.log("Base64 Image: ", base64String);
+                setSelectedFile(base64String);
+            } catch (error) {
+                console.error("Error converting file to base64: ", error);
+            }
         } else {
             setSelectedFile("");
         }
     };
 
+    const handlePasswordStrength = (password: string) => {
+        const hasNumber = /[0-9]/.test(password);
+        const hasUpperLetter = /[A-Z]/.test(password);
+        const hasLowerLetter = /[a-z]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        return hasNumber && hasUpperLetter && hasLowerLetter && hasSpecialChar
+    }
+
     return (
         <>
             <form className="form" onSubmit={handleSubmit(handleFormSubmit)}>
                 <label htmlFor="name">Name</label>
-                <input type="text" id="name" {...register('name', { required: true, maxLength: 50, pattern: /^[A-Za-z]+$/i })} />
+                <input type="text" id="name" {...register('name', { required: true, pattern: /^[A-Z][a-zA-Z]*$/ })} />
                 <div className="error-container">
-                    {errors.name && <p className="error">Name must contain only letters and be no longer than 50 characters.</p>}
+                    {errors.name && <p className="error">Name must start with capital letter</p>}
                 </div>
 
                 <label htmlFor="age">Age</label>
@@ -68,11 +107,11 @@ const ReactHookForm: React.FC = () => {
                     id="password"
                     {...register('password', {
                         required: true,
-                        pattern: /^(?=.*[A-Z])(?=.*\d).+$/i
+                        pattern: /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).+$/
                     })}
                 />
                 <div className="error-container">
-                    {errors.password && <p className="error">Password must contain at least one uppercase letter and one number.</p>}
+                    {errors.password && <p className="error">Password must contain at least 1 number, 1 upper letter, 1 lower letter and 1 special char</p>}
                 </div>
 
                 <label htmlFor="repeatPassword">Repeat Password</label>
@@ -127,7 +166,7 @@ const ReactHookForm: React.FC = () => {
                     {errors.terms && <p className="error">You must agree to the terms and conditions.</p>}
                 </div>
 
-                <button className="submit-btn" type="submit">Submit</button>
+                <button disabled={!isValid} className="submit-btn" type="submit">Submit</button>
             </form>
         </>
     );
