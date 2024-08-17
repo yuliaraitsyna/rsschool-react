@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { countries } from "../../info/countries";
 
+
 const countriesSlice = createSlice({
     name: 'countries',
     initialState: {

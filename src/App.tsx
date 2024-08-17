@@ -1,7 +1,10 @@
+import { useSelector } from 'react-redux';
 import './App.css';
 import { Link } from 'react-router-dom';
+import { RootState } from './components/redux/store';
 
-function App() {
+const App: React.FC = () => {
+  const data = useSelector((state: RootState) => state.form.data);
   return (
     <>
     <nav className='navigation'>
@@ -11,13 +14,13 @@ function App() {
       </ul>
     </nav>
       <div className='info'>
-        <h1 className='name'>{`Name: `}</h1>
-        <img className='profile-img'></img>
+        <h1 className='name'>{`Name: ${data.name}`}</h1>
+        <img className='profile-img' src={data.img}></img>
         <div className='info-text'>
-          <span className='age'>{`Age: `}</span>
-          <p className='gender'>{`Gender: `}</p>
-          <p className='email'>{`Email: `}
-            <Link to={`mailto:`} className='link'>{}</Link>
+          <span className='age'>{`Age: ${data.age}`}</span>
+          <p className='gender'>{`Gender: ${data.gender}`}</p>
+          <p className='email'>{`Email:`}
+            <Link to={`mailto:${data.email}`} className='link'>{data.email}</Link>
           </p>
         </div>
       </div>
