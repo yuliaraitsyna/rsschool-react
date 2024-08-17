@@ -71,15 +71,6 @@ const ReactHookForm: React.FC = () => {
         }
     };
 
-    const handlePasswordStrength = (password: string) => {
-        const hasNumber = /[0-9]/.test(password);
-        const hasUpperLetter = /[A-Z]/.test(password);
-        const hasLowerLetter = /[a-z]/.test(password);
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-        return hasNumber && hasUpperLetter && hasLowerLetter && hasSpecialChar
-    }
-
     return (
         <>
             <form className="form" onSubmit={handleSubmit(handleFormSubmit)}>
