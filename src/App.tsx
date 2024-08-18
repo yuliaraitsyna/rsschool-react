@@ -19,6 +19,7 @@ const App: React.FC = () => {
         <div className='info-text'>
           <span className='age'>{`Age: ${data.age}`}</span>
           <p className='gender'>{`Gender: ${data.gender}`}</p>
+          <p className='country'>{`Country: ${data.country}`}</p>
           <p className='email'>{`Email:`}
             <Link to={`mailto:${data.email}`} className='link'>{data.email}</Link>
           </p>
