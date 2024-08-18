@@ -1,0 +1,59 @@
+.form {
+    width: 50%;
+    min-width: 200px;
+    max-width: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: var(--bg-highlight);
+    border: none;
+    border-radius: 20px;
+    box-shadow: var(--shadow-color) 5px 5px 5px;
+
+    font-size: 18px;
+}
+
+.form > input, .countries-list {
+    min-height: 20px;
+    border: none;
+    background-color: white;
+    padding: 5px;
+    border: solid transparent;
+    border-radius: 5px;
+    margin-left: 20px;
+    transition: border 1s;
+    width: 60%;
+
+    &:hover {
+        border: solid var(--link-color);
+    }
+}
+
+.form > input#age {
+    width: 15%;
+}
+
+.submit-btn {
+    background-color: var(--link-color);
+    color: white;
+    border: solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100px;
+    align-self:last baseline;
+}
+
+.terms {
+    display: flex;
+}
+
+.error-container {
+    min-height: 10px;
+}
+
+.error {
+    font-size: 10px;
+    color: red;
+    margin: 0;
+}
