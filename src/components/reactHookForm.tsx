@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Person from "./model/Person";
 import { setData } from "./redux/formSlice";
 import { useNavigate } from "react-router-dom";
+import { convertToBase64 } from "./model/convertImageBase64";
 
 const ReactHookForm: React.FC = () => {
     const countriesList = useSelector((state: RootState) => state.countries.countries);
@@ -32,15 +33,6 @@ const ReactHookForm: React.FC = () => {
         dispatch(setData(data));
         reset();
         navigate("/");
-    };
-
-    const convertToBase64 = (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = (error) => reject(error);
-        });
     };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
