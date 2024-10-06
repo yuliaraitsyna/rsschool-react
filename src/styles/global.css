@@ -1,0 +1,75 @@
+:root {
+    --background-color: #343434;
+    --upper-bg-color: rgb(20, 20, 20);
+    --accent-color: rgb(255, 0, 0);
+    --hover-color: rgba(255, 0, 0, 0.22);
+    --text-color: #000000;
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    background-color: var(--background-color);
+  }
+  
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    min-width: 320px;
+    min-height: 100vh;
+}
+  
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+.dark {
+    --background-color: #333333;
+    --upper-bg-color: rgb(20, 20, 20);
+    --accent-color: rgb(255, 0, 0);
+    --hover-color: rgba(255, 0, 0, 0.22);
+    --text-color: #ffffff;
+}
+  
+.light {
+    --background-color: #e4e4e4;
+    --upper-bg-color: rgb(255, 255, 255);
+    --accent-color: rgb(0, 0, 255);
+    --hover-color: rgba(0, 0, 255, 0.22);
+    --text-color: #000000;
+}
+  
+.app {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.upper-component {
+    padding: 2%;
+    margin-bottom: 20px;
+    width: 100vw;
+    position:sticky;
+    top: 0;
+
+    background-color: var(--upper-bg-color)
+}
+
+main {
+    margin:5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.right-section {
+    margin-left: 100px;
+}
