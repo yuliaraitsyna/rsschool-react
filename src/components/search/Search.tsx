@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import useLocalStorage from "../../models/useLocalStorage";
-import "./Search.css"
-import { useGetDataByNameQuery } from "../../redux/starWarsAPI";
+import { useGetDataByNameQuery } from "../redux/starWarsAPI";
 import { useDispatch } from "react-redux";
-import { setCards } from "../../redux/cardsSlice";
+import { setCards } from "../redux/cardsSlice";
+import styles from "./Search.module.css"
 
 const Search: React.FC = () => {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Search: React.FC = () => {
     }
 
     return (
-        <div className="search-bar">
+        <div className={styles["search-bar"]}>
             <form onSubmit={handleSearch}>
                 <input
                     type="text"

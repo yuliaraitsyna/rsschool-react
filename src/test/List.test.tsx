@@ -3,15 +3,18 @@ import List from "../components/list/List"
 import { render, screen } from "@testing-library/react";
 import { mockPeople } from "../mocks/mockPeople";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../components/redux/store";
+import '@testing-library/jest-dom';
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
+import { mockRouter } from "src/mocks/mockRouter";
 
 test('Renders specified number of cards', () => {
     render(
-        <BrowserRouter>
+        <RouterContext.Provider value={mockRouter}>
             <Provider store={store}>
                 <List result={mockPeople} onItemClick={() => {}}></List>
             </Provider>
-        </BrowserRouter>
+        </RouterContext.Provider>
     );
 
     const items = screen.getAllByRole('listitem');
@@ -20,11 +23,11 @@ test('Renders specified number of cards', () => {
 
 test('An appropriate message is displayed if no cards are present', () => {
     render(
-        <BrowserRouter>
+        <RouterContext.Provider value={mockRouter}>
             <Provider store={store}>
                 <List result={[]} onItemClick={() => {}}></List>
             </Provider>
-        </BrowserRouter>
+        </RouterContext.Provider>
     );
 
     expect(screen.getByText("No results found.")).toBeInTheDocument();

@@ -1,11 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mockPeople } from "../mocks/mockPeople";
-import cardsSlice, { selectCard, setCards, unselectAll, unselectCard } from "../redux/cardsSlice";
-import pageSlice, { nextPage, prevPage, setTotalPages } from "../redux/pageSlice";
-import store from "../redux/store";
+import cardsSlice, { selectCard, setCards, unselectAll, unselectCard } from "../components/redux/cardsSlice";
+import pageSlice, { nextPage, prevPage, setTotalPages } from "../components/redux/pageSlice";
+import store from "../components/redux/store";
 import { Provider } from "react-redux";
 import Search from "../components/search/Search";
 import List from "../components/list/List";
+import '@testing-library/jest-dom';
 
 describe('page slice', () => {
     it('should handle initial state', () => {
@@ -82,4 +83,3 @@ describe('Search Component', () => {
       });
     });
 });
-

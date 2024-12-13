@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Search from "../components/search/Search";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../components/redux/store";
+import '@testing-library/jest-dom';
 
 const localStorageMock = (() => {
   let store: { [key: string]: string } = {};
@@ -53,4 +54,3 @@ test("Component retrieves the value from the local storage upon mounting", async
       expect(input.value).toBe('saved value');
     });
 });
-
